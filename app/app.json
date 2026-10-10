@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "SahneBul Studio",
+    "slug": "sahnebul-studio",
+    "scheme": "sahnebul",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "plugins": [
+      "expo-router",
+      "expo-document-picker",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "SahneBul, referans fotoğrafı ve videoları seçebilmek için galeri erişimi ister."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "android": {
+      "package": "com.sahnebul.studio"
+    },
+    "ios": {
+      "bundleIdentifier": "com.sahnebul.studio"
+    }
+  }
+}
