@@ -1,3 +1,4 @@
+
 name: Build SahneBul APK
 
 on:
@@ -12,24 +13,27 @@ jobs:
       - name: Projeyi indir
         uses: actions/checkout@v4
 
-            - name: Node.js kur
+      - name: Node.js kur
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Bağımlılıkları yükle
-        working-directory: app
-        run: npm install
-
-      - name: Android APK oluştur
-        working-directory: app
-        run: npx expo prebuild --platform android --no-install
 
       - name: Java kur
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+
+      - name: Android SDK kur
+        uses: android-actions/setup-android@v3
+
+      - name: Bağımlılıkları yükle
+        working-directory: app
+        run: npm install
+
+      - name: Android projesini oluştur
+        working-directory: app
+        run: npx expo prebuild --platform android
 
       - name: Gradle ile APK derle
         working-directory: app/android
