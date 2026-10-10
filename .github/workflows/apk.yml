@@ -1,0 +1,47 @@
+name: Build SahneBul APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Android APK oluştur
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Projeyi indir
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Bağımlılıkları yükle
+        working-directory: app
+        run: npm install
+
+      - name: Android APK oluştur
+        working-directory: app
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Java kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Gradle ile APK derle
+        working-directory: app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: APK dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: SahneBul-Studio-Android-APK
+          path: app/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
